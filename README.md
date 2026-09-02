@@ -79,6 +79,14 @@ blocked IP). Passwords are redacted from its output.
 
 ## API
 
+### Health
+
+`GET /health` reports whether the API can reach its database. It returns `200`
+when connected and `503` otherwise, with the connection state, the database
+name, and whether `MONGODB_URI` was supplied - useful for telling a
+misconfigured deployment apart from a broken one. It never echoes the
+connection string, which contains credentials.
+
 ### Users
 
 | Verb | Route | Description | Success |
