@@ -2,7 +2,7 @@
   "name": "mongoose-sampling",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
     "test": "mocha --require ./test/setup.js test/**/*.spec.js --exit",
