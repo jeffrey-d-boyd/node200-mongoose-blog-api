@@ -137,7 +137,9 @@ test/               Mocha/Chai specs for the models and routes
 4. Connect the repository to CircleCI. `.circleci/config.yml` installs
    dependencies and runs the test suite against a MongoDB service container; on
    a green build of `main` it calls the Render deploy hook stored in the
-   `RENDER_DEPLOY_HOOK_URL` environment variable.
+   `RENDER_DEPLOY_HOOK_URL` environment variable. Until that variable is set in
+   the CircleCI project, the deploy job logs a notice and exits without
+   deploying, so the pipeline stays green before Render exists.
 
 ## Notes
 

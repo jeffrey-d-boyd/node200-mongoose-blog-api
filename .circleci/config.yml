@@ -33,7 +33,15 @@ jobs:
     steps:
       - run:
           name: Trigger Render deploy
-          command: curl -fsS -X POST "$RENDER_DEPLOY_HOOK_URL"
+          command: |
+            if [ -z "$RENDER_DEPLOY_HOOK_URL" ]; then
+              echo "RENDER_DEPLOY_HOOK_URL is not set - skipping deploy."
+              echo "Add it in CircleCI under Project Settings > Environment Variables"
+              echo "using the deploy hook from your Render service settings."
+              exit 0
+            fi
+            curl -fsS -X POST "$RENDER_DEPLOY_HOOK_URL"
+            echo "Render deploy triggered."
 
 workflows:
   test-and-deploy:
