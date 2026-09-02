@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server/index.js",
     "test": "mocha --require ./test/setup.js test/**/*.spec.js --exit",
-    "submit": "mocha test/submission.spec.js"
+    "submit": "mocha test/submission.spec.js",
+    "check-db": "node scripts/check-db.js"
   },
   "author": "",
   "license": "ISC",

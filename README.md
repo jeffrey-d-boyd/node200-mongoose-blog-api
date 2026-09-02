@@ -40,6 +40,19 @@ npm test
 
 The suite talks to a real database, so MongoDB must be running first.
 
+## Checking a connection string
+
+Before pointing the app at a new database, you can verify the connection string
+end to end - it connects, writes a document, reads it back, and removes it:
+
+```bash
+npm run check-db                        # uses MONGODB_URI, or the local default
+npm run check-db -- "<connection uri>"  # checks a specific string
+```
+
+On failure it reports the likely cause (bad credentials, unresolved host,
+blocked IP). Passwords are redacted from its output.
+
 ## Data model
 
 ### User
