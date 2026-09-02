@@ -1,0 +1,47 @@
+version: 2.1
+
+jobs:
+  test:
+    docker:
+      - image: cimg/node:20.11
+      - image: mongo:6.0
+    environment:
+      MONGODB_URI: mongodb://localhost/my-blog-test
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-deps-{{ checksum "package-lock.json" }}
+            - v1-deps-
+      - run:
+          name: Install dependencies
+          command: npm install
+      - save_cache:
+          key: v1-deps-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Wait for MongoDB
+          command: dockerize -wait tcp://localhost:27017 -timeout 1m
+      - run:
+          name: Run tests
+          command: npm test
+
+  deploy:
+    docker:
+      - image: cimg/base:current
+    steps:
+      - run:
+          name: Trigger Render deploy
+          command: curl -fsS -X POST "$RENDER_DEPLOY_HOOK_URL"
+
+workflows:
+  test-and-deploy:
+    jobs:
+      - test
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: main
