@@ -29,7 +29,15 @@ if (process.env.NODE_ENV !== 'test') {
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.status(200).send();
+    res.status(200).json({
+        name: 'Mongoose Blog API',
+        endpoints: {
+            health: '/health',
+            users: '/api/users',
+            blogs: '/api/blogs',
+            featuredBlogs: '/api/blogs/featured'
+        }
+    });
 });
 
 // Reports whether the database is actually reachable, which a 500 from a data
